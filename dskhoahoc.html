@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VBC</title>
+    <link rel="shortcut icon" href="public/images/vbc_logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="public/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="public/fontawesome/css/all.css">
+    <link rel="stylesheet" href="public/fontawesome/css/solid.css">
+    <link rel="stylesheet" href="public/fontawesome/css/brands.css">
+    <link rel="stylesheet" href="public/stylesheets/app.css">
+</head>
+
+<body>
+    <!-- loader -->
+    <div id="site-loader" class="fullscreen siteloader show" style="background-color: rgba(0, 0, 0, 0.7);">
+        <svg version="1.1" id="L2" class="circular" width="48px" height="48px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+        <circle fill="none" stroke="#fff" stroke-width="4" stroke-miterlimit="10" cx="50" cy="50" r="48"/>
+        <line fill="none" stroke-linecap="round" stroke="#fff" stroke-width="4" stroke-miterlimit="10" x1="50" y1="50" x2="85" y2="50.5">
+        <animateTransform 
+            attributeName="transform" 
+            dur="2s"
+            type="rotate"
+            from="0 50 50"
+            to="360 50 50"
+            repeatCount="indefinite" />
+        </line>
+        <line fill="none" stroke-linecap="round" stroke="#fff" stroke-width="4" stroke-miterlimit="10" x1="50" y1="50" x2="49.5" y2="74">
+        <animateTransform 
+            attributeName="transform" 
+            dur="15s"
+            type="rotate"
+            from="0 50 50"
+            to="360 50 50"
+            repeatCount="indefinite" />
+        </line>
+        </svg>
+
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand mb-0 h1" href="#">
+                <img src="public/images/VBC-logo-transparent_compress.png" alt="" width="30" height="24"
+                    class="d-inline-block align-text-top">
+                VBC
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <!-- =============================== User view =============================== -->
+                    <li class="nav-item user-view d-none">
+                        <a class="nav-link active" href="#" aria-current="page" data-bs-toggle="modal" data-bs-target="#modal-balance"> <i class="fa fa-database"></i> Balance </a>
+                    </li>
+                    <li class="nav-item user-view d-none">
+                        <a class="nav-link active" href="#" data-bs-toggle="modal" data-bs-target="#modal-transfer"> <i class="fa fa-exchange-alt"></i> Transfer </a>
+                    </li>
+                    <li class="nav-item user-view d-none">
+                        <a class="nav-link active" href="#" data-bs-toggle="modal" data-bs-target="#modal-history"> <i class="fa fa-history"></i> History </a>
+                    </li>
+
+                    <!-- =============================== Admin view =============================== -->
+                    <li class="nav-item admin-view d-none">
+                        <a class="nav-link active" href="#" aria-current="page" data-bs-toggle="modal" data-bs-target="#modal-create-token"> <i class="fa fa-wallet"></i> DS khóa học </a>
+                    </li>
+                    <li class="nav-item admin-view d-none">
+                        <a class="nav-link active" href="#" data-bs-toggle="modal" data-bs-target="#modal-create-user"> <i class="fa fa-user-plus"></i> DS học viên </a>
+                    </li>
+                    <li class="nav-item admin-view d-none">
+                        <a class="nav-link active" href="#" data-bs-toggle="modal" data-bs-target="#modal-token-list"> <i class="fa fa-list-alt"></i> Thêm khóa học </a>
+                    </li>
+                    <li class="nav-item admin-view d-none">
+                        <a class="nav-link active" href="#" data-bs-toggle="modal" data-bs-target="#modal-user-list"> <i class="fa fa-list-alt"></i> Thêm học viên </a>
+                    </li>
+                    
+                </ul>
+                <div class="d-flex">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 log-out-view d-none">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span id="nav-username"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a id="btn-sign-out" class="dropdown-item" href="#"> <i class="fa fa-sign-out-alt"></i> Sign out </a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <a id="btn-sign-in" class="btn btn-outline-secondary" href="#" data-bs-toggle="modal" data-bs-target="#modal-login"> <i class="fa fa-sign-in-alt"></i> Sign in </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container full-height">
+        <div class="card mt-3">
+            <div class="card-header">
+                <i class="fa fa-list-alt"></i> Danh sách khóa học
+            </div>
+            <div class="card-body">
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="col">
+                      <div class="card h-100">
+                        <img src="public/images/course.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Hyperledger Fabric</h5>
+                            <p class="card-text">
+                                <i class="fas fa-chalkboard-teacher"></i> <strong> <span class="badge rounded-pill bg-primary"> Van-Hoa NGUYEN </span> </strong>
+                                <br>
+                                <i class="fa fa-users"></i> <strong> <span class="badge rounded-pill bg-secondary"> 50 </span> </strong>
+                            </p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-success" aria-current="page" data-bs-toggle="modal" data-bs-target="#modal-student" title="Danh sách học viên"><i class="fa fa-user-graduate"></i></button>
+                            <button class="btn btn-secondary" aria-current="page" data-bs-toggle="modal" data-bs-target="#modal-course-edit" title="Chỉnh sửa khóa học"><i class="fa fa-edit"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card h-100">
+                        <img src="public/images/course.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">API Gateway</h5>
+                            <p class="card-text">
+                                <i class="fas fa-chalkboard-teacher"></i> <strong> <span class="badge rounded-pill bg-primary"> Phuoc-Hai HUYNH </span> </strong>
+                                <br>
+                                <i class="fa fa-users"></i> <strong> <span class="badge rounded-pill bg-secondary"> 49 </span> </strong>
+                            </p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-success" aria-current="page" data-bs-toggle="modal" data-bs-target="#modal-student" title="Danh sách học viên"><i class="fa fa-user-graduate"></i></button>
+                            <button class="btn btn-secondary" aria-current="page" data-bs-toggle="modal" data-bs-target="#modal-transfer" title="Chỉnh sửa khóa học"><i class="fa fa-edit"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card h-100">
+                        <img src="public/images/course.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Application</h5>
+                            <p class="card-text">
+                                <i class="fas fa-chalkboard-teacher"></i> <strong> <span class="badge rounded-pill bg-primary"> Hoang-Tung NGUYEN </span> </strong>
+                                <br>
+                                <i class="fa fa-users"></i> <strong> <span class="badge rounded-pill bg-secondary"> 55 </span> </strong>
+                            </p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-success" aria-current="page" data-bs-toggle="modal" data-bs-target="#modal-student" title="Danh sách học viên"><i class="fa fa-user-graduate"></i></button>
+                            <button class="btn btn-secondary" aria-current="page" data-bs-toggle="modal" data-bs-target="#modal-transfer" title="Chỉnh sửa khóa học"><i class="fa fa-edit"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid bg-light mt-5 p-3">
+        <div class="row text-center">
+            <h5>VBC</h5>
+            <p> Developing base on hyperledger fabric </p>
+            <small> <a target="_blank" href="https://agchain.vn"> https://agchain.vn </a> </small>
+            <br>
+        </div>
+    </div>
+
+    <!-- Modal Login -->
+    <div class="modal fade" id="modal-login" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-login-label" aria-hidden="true">git
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-login-label"> <i class="fa fa-user"></i> Sign in </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="div-login-message" class="alert alert-danger d-none" hide="true">
+                        <p id="login-message" class="text-danger"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="login-username"> Username </label>
+                        <input type="text" id="login-username" name="login-username" class="form-control" placeholder="Type your username">
+                        <div id="login-username-message" class="invalid-feedback"> </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="login-password"> Password </label>
+                        <input type="password" id="login-password" name="login-password" class="form-control" placeholder="Type your password">
+                        <div id="login-username-message" class="invalid-feedback"> </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="btn-log-in" class="btn btn-primary"> <i class="fa fa-sign-in-alt"></i> Sign in </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Student List -->
+    <div class="modal fade" id="modal-student" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-student-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-student-label"> <i class="fa fa-user-graduate"></i> Student list </h5>
+                    <div class="float-right">
+                        <button class="btn btn-success pull-right" aria-current="page" data-bs-toggle="modal" data-bs-target="#modal-add-student" title="Add student"><i class="fa fa-user-plus"></i></button> &emsp;
+                        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" title="Close"></button> -->
+                    </div>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Mark</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td class="text-center">1</td>
+                                <td>AGU001</td>
+                                <td>Trần Văn Bình</td>
+                                <td>tvbinh@agu.edu.vn</td>
+                                <td><input type="number" name="" id="" step="0.1" class="form-control text-right"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">2</td>
+                                <td>AGU002</td>
+                                <td>Phạm Gia Nguyên</td>
+                                <td>pgnguyen@agu.edu.vn</td>
+                                <td><input type="number" name="" id="" step="0.1" class="form-control text-right"></td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" > <i class="fa fa-save"></i> Save </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> <i class="fa fa-times"></i> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Add Student -->
+    <div class="modal fade" id="modal-add-student" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-add-student-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-add-student-label"> <i class="fa fa-user-plus"></i> Add student </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> &emsp; &emsp;
+                </div>
+                <div class="modal-body">
+                    <div id="div-add-student-message" class="alert alert-danger d-none" hide="true">
+                        <p id="add-student-message" class="text-danger"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="add-student-id-email"> Id or Email </label>
+                        <input type="text" id="add-student-id-email" class="form-control" placeholder="Type id or email">
+                        <div id="add-student-id-email-message" class="invalid-feedback"> </div>
+                    </div>
+
+                    <div class="mb-3 text-center">
+                        <button class="btn btn-success"><i class="fa fa-check"></i> Check </button>
+                    </div>
+
+                    <hr>
+
+                    <div class="mb-3 has-validation">
+                        <label for="add-student-list"> Student list <span class="badge bg-secondary">2</span> </label> <br>
+                        <span class="badge rounded-pill bg-info">Trần Thị B</span>
+                        <span class="badge rounded-pill bg-info">Pham Văn C</span>
+                    </div>
+
+                    <div class="mb-3 has-validation text-danger">
+                        <label for="add-student-list-available"> Student not available <span class="badge bg-secondary">1</span> </label> <br>
+                        <span class="badge rounded-pill bg-info">Lê Thị C</span>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn-add-student-transfer" class="btn btn-primary"> <i class="fa fa-plus"></i> Add </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> <i class="fa fa-times"></i> Close </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Course Edit -->
+    <div class="modal fade" id="modal-course-edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-course-edit-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-course-edit-label"> <i class="fas fa-chalkboard-teacher"></i> Course <small class="small"> (edit) </small> </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="div-course-edit-message" class="alert alert-danger d-none" hide="true">
+                        <p id="add-course-edit-message" class="text-danger"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="course-edit-id"> Course id </label>
+                        <input type="text" id="course-edit-id" class="form-control" placeholder="Type course id">
+                        <div id="course-edit-id-message" class="invalid-feedback"> </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="course-edit-name"> Course name </label>
+                        <input type="text" id="course-edit-name" class="form-control" placeholder="Type course name">
+                        <div id="course-edit-name-message" class="invalid-feedback"> </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="course-edit-price"> Price </label>
+                        <input type="number" id="course-edit-price" class="form-control" placeholder="Type course price">
+                        <div id="course-edit-price-message" class="invalid-feedback"> </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="course-edit-school-year"> School year </label>
+                        <input type="text" id="course-edit-school-year" class="form-control" placeholder="Type school-year">
+                        <div id="course-edit-school-year-message" class="invalid-feedback"> </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="course-edit-instructor"> Instructor </label>
+                        <input type="text" id="course-edit-instructor" class="form-control" placeholder="Type instructor">
+                        <div id="course-edit-instructor-message" class="invalid-feedback"> </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btn-course-edit-save"> <i class="fa fa-save"></i> Save </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> <i class="fa fa-times"></i> Close </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal History -->
+    <div class="modal fade" id="modal-history" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-history-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-history-label"> <i class="fa fa-history"></i> History </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    Developing <i class="fa fa-spinner fa-spin"></i>
+                    <p>Coming soon!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Create Token -->
+    <div class="modal fade" id="modal-create-token" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-create-token-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-create-token-label"> <i class="fa fa-wallet"></i> Create token </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                       <label for="create-token-username"> User </label>
+                       <input type="text" id="create-token-username" class="form-control" placeholder="Type user ...">
+                       <div id="create-token-username-message" class="invalid-feedback"> </div>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="create-token-amount"> Amount </label>
+                        <input type="number" id="create-token-amount" class="form-control" min="1" placeholder="Type amount ...">
+                        <div id="create-token-amount-message" class="invalid-feedback"> </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="btn-create-token" class="btn btn-primary"> Confirm </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Create User -->
+    <div class="modal fade" id="modal-create-user" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-create-user-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-create-user-label"> <i class="fa fa-user-plus"></i> Create user </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="create-user-username"> User </label>
+                        <input type="text" id="create-user-username" class="form-control" placeholder="Type user ...">
+                        <div id="create-user-username-message" class="invalid-feedback"> </div>
+
+                    </div>
+ 
+                    <div class="mb-3">
+                        <label for="create-user-password"> Password </label>
+                        <input type="password" id="create-user-password" class="form-control" min="1" placeholder="Type password ...">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="create-user-confirm-password"> Confirm password </label>
+                        <input type="password" id="create-user-confirm-password" class="form-control" min="1" placeholder="Confirm password ...">
+                        <div id="create-user-confirm-password-message" class="invalid-feedback"> </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Close </button>
+                    <button type="button" id="btn-create-user" class="btn btn-primary"> Confirm </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Modal User List -->
+     <div class="modal fade" id="modal-user-list" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-user-list-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-user-list-label"> <i class="fa fa-list-alt"></i> User list </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    Developing <i class="fa fa-spinner fa-spin"></i>
+                    <p>Coming soon!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Token List -->
+    <div class="modal fade" id="modal-token-list" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-token-list-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-token-list-label"> <i class="fa fa-list-alt"></i> Token list </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    Developing <i class="fa fa-spinner fa-spin"></i>
+                    <p>Coming soon!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Alert -->
+    <div class="modal fade" id="modal-alert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-alert-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-alert-label"> <i class="fa fa-bullhorn"></i> </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <span id="msg-alert"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="public/bootstrap/js/bootstrap.min.js"></script>
+<script src="public/fontawesome/js/all.js"></script>
+<script src="public/jquery/jquery.min.js"></script>
+<script src="public/javascripts/app.js"></script>
+</html>
